@@ -13,7 +13,7 @@ namespace Nameofthegame.Inputs
 
         [Header("Additional Settings")]
         [SerializeField] private bool isGrounded = false;
-        [SerializeField] private Transform groundControlColliderTransform;
+        [SerializeField] private Transform groundColTransform;
         [SerializeField] private AnimationCurve curve;
         [SerializeField] private float jumpOffset;
         [SerializeField] private LayerMask layerMask;
@@ -51,15 +51,16 @@ namespace Nameofthegame.Inputs
         private void Awake()
         {
             renderer = GetComponent<Renderer>();
-            yScale = renderer.bounds.size.y;
-            xScale = renderer.bounds.size.x;
             Cursor.visible = false;
             uICanvas = GameObject.Find("UICanvas");
             if (uICanvas != null) levelManager = uICanvas.GetComponent<LevelManager>();
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             makeHit = GetComponent<MakeHitScript>();
-            groundCollider = transform.GetChild(0).GetComponent<Collider2D>();
+            groundColTransform = transform.GetChild(0);
+            if (groundColTransform != null) groundCollider = groundColTransform.GetComponent<Collider2D>();
+            yScale = groundCollider.bounds.size.y;
+            xScale = groundCollider.bounds.size.x;
             slopeCheckDistance = xScale / 2 + 0.1f;
         }
 
@@ -80,7 +81,6 @@ namespace Nameofthegame.Inputs
                 canJump = true;
                 animator.SetBool("Jump", false);
             }
-
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Nameofthegame.Inputs
         /// </summary>
         private void SlopeCheck()
         {
-            Vector2 checkPos = new Vector2(transform.position.x, transform.position.y + jumpOffset);
+            Vector2 checkPos = new Vector2(groundColTransform.position.x, groundColTransform.position.y + jumpOffset);
             Vector2 upVector = new Vector2(checkPos.x, checkPos.y + 1f);
             SlopeCheckHorizontal(checkPos, upVector);
             SlopeCheckVertical(checkPos, upVector);
@@ -96,8 +96,8 @@ namespace Nameofthegame.Inputs
 
         private void SlopeCheckHorizontal(Vector2 checkPos, Vector2 upVector)
         {
-            Vector2 rightPoint = new Vector2(transform.position.x + xScale / 2, transform.position.y + jumpOffset);
-            Vector2 leftPoint = new Vector2(transform.position.x - xScale / 2, transform.position.y + jumpOffset);
+            Vector2 rightPoint = new Vector2(groundColTransform.position.x + xScale / 2, groundColTransform.position.y + jumpOffset);
+            Vector2 leftPoint = new Vector2(groundColTransform.position.x - xScale / 2, groundColTransform.position.y + jumpOffset);
             RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, Vector2.right, slopeCheckDistance, layerMask);
             RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, Vector2.left, slopeCheckDistance, layerMask);
 
@@ -160,6 +160,11 @@ namespace Nameofthegame.Inputs
             }
         }
 
+        /// <summary>
+        /// Check if there is any collision with ground
+        /// </summary>
+        /// <param name="overlapPosition">touch point</param>
+        /// <returns></returns>
         private bool GetCollision(Vector2 overlapPosition)
         {
             bool hasGround = false;
@@ -182,9 +187,12 @@ namespace Nameofthegame.Inputs
             return hasGround;
         }
 
+        /// <summary>
+        /// Check if there is ground below
+        /// </summary>
         private void CheckGround()
         {
-            Vector2 overlapPosition = new Vector2(transform.position.x, transform.position.y + 0.05f);
+            Vector2 overlapPosition = new Vector2(groundColTransform.position.x, groundColTransform.position.y + 0.05f);
 
             bool hasGround = GetCollision(overlapPosition);
             isGrounded = Physics2D.OverlapCircle(overlapPosition, jumpOffset, layerMask) && hasGround;
