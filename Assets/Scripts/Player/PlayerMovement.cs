@@ -47,6 +47,9 @@ namespace Nameofthegame.Inputs
         private Collider2D groundCollider;
         private RaycastHit2D hit;
         private GameObject uICanvas;
+        private int appDirection;
+        private bool appJump;
+        private bool appFire;
 
         private void Awake()
         {
@@ -67,7 +70,12 @@ namespace Nameofthegame.Inputs
         private void Update()
         {
             float horizontalDirection = Input.GetAxis(GameNamespace.HORIZONTAL_AXIS);
-            bool isJumping = Input.GetButtonDown(GameNamespace.JUMP);
+            if (appDirection != 0) horizontalDirection = appDirection;
+            bool isJumping;
+            if (appJump == false) { isJumping = Input.GetButtonDown(GameNamespace.JUMP); } else
+            {
+                isJumping = true;
+            }
             bool isFiring1 = Input.GetButtonDown(GameNamespace.FIRE1);
             bool isUsing = Input.GetButtonDown(GameNamespace.SUBMIT2);
             bool isPause = Input.GetButtonDown(GameNamespace.CANCEL);
@@ -83,6 +91,15 @@ namespace Nameofthegame.Inputs
             }
         }
 
+        public void SetDirection(int newValue)
+        {
+            appDirection = newValue;
+        }
+
+        public void JumpButtonState(bool isJumpingByButton)
+        {
+            appJump = isJumpingByButton;
+        }
         /// <summary>
         /// Check the slope of the platform
         /// </summary>
@@ -171,7 +188,7 @@ namespace Nameofthegame.Inputs
             RaycastHit2D[] allCollisions = Physics2D.CircleCastAll(overlapPosition, xScale, new Vector2(0, 0), 0, layerMask);
             if (allCollisions.Length > 0)
             {
-                for (int i=0; i < allCollisions.Length; i++)
+                for (int i = 0; i < allCollisions.Length; i++)
                 {
                     Vector2 hitPoint = allCollisions[i].point;
                     if (markerObject != null)
@@ -232,7 +249,7 @@ namespace Nameofthegame.Inputs
             direction = appliedDirection;
             if (isPause)
             {
-                if (levelManager !=null) levelManager.PauseGame();
+                if (levelManager != null) levelManager.PauseGame();
             }
             if (isUnderControl)
             {
@@ -331,8 +348,11 @@ namespace Nameofthegame.Inputs
             }
             else if (!isGrounded) //If in the air
             {
-                newVelocity.Set(speed * direction, rb.velocity.y);
-                rb.velocity = newVelocity;
+                if (rb.velocity.y >= 0)
+                {
+                    newVelocity.Set(speed * direction, rb.velocity.y);
+                    rb.velocity = newVelocity;
+                }
             }
         }
 
