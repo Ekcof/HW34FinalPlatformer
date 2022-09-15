@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private void InitializeNotificationChannel()
     {
         GameNotificationChannel channel = new GameNotificationChannel("mntutorial", "Mobile Notifications Tutorial", "Just a notification");
+
         gameNotificationsManager.Initialize(channel);
     }
 
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
         IGameNotification notification = gameNotificationsManager.CreateNotification();
         if (notification != null)
         {
+            notification.LargeIcon = "icon_0";
             notification.Title = title;
             notification.Body = body;
             notification.DeliveryTime = time;

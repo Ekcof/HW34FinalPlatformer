@@ -126,10 +126,10 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 6
+  spritePivot: {x: 0, y: 0}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -202,12 +202,12 @@ TextureImporter:
       name: floor_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 590
-        width: 180
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 11
+        y: 336
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -223,12 +223,12 @@ TextureImporter:
       name: floor_1
       rect:
         serializedVersion: 2
-        x: 248
-        y: 590
-        width: 178
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 143
+        y: 336
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -244,12 +244,12 @@ TextureImporter:
       name: floor_2
       rect:
         serializedVersion: 2
-        x: 477
-        y: 590
-        width: 177
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 272
+        y: 336
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -265,12 +265,12 @@ TextureImporter:
       name: floor_3
       rect:
         serializedVersion: 2
-        x: 703
-        y: 590
-        width: 177
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 402
+        y: 336
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -286,12 +286,12 @@ TextureImporter:
       name: floor_4
       rect:
         serializedVersion: 2
-        x: 930
-        y: 590
-        width: 178
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 531
+        y: 336
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -307,12 +307,12 @@ TextureImporter:
       name: floor_5
       rect:
         serializedVersion: 2
-        x: 1157
-        y: 590
-        width: 178
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 660
+        y: 336
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -328,12 +328,12 @@ TextureImporter:
       name: floor_6
       rect:
         serializedVersion: 2
-        x: 1376
-        y: 590
-        width: 177
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 785
+        y: 336
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -349,12 +349,12 @@ TextureImporter:
       name: floor_7
       rect:
         serializedVersion: 2
-        x: 15
-        y: 390
-        width: 181
-        height: 177
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 9
+        y: 223
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -370,12 +370,12 @@ TextureImporter:
       name: floor_8
       rect:
         serializedVersion: 2
-        x: 249
-        y: 390
-        width: 178
-        height: 178
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 143
+        y: 223
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -391,12 +391,12 @@ TextureImporter:
       name: floor_9
       rect:
         serializedVersion: 2
-        x: 477
-        y: 390
-        width: 178
-        height: 177
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 272
+        y: 223
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -412,12 +412,12 @@ TextureImporter:
       name: floor_10
       rect:
         serializedVersion: 2
-        x: 702
-        y: 391
-        width: 179
-        height: 176
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 402
+        y: 223
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -433,12 +433,12 @@ TextureImporter:
       name: floor_11
       rect:
         serializedVersion: 2
-        x: 931
-        y: 391
-        width: 178
-        height: 176
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 531
+        y: 223
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -454,12 +454,12 @@ TextureImporter:
       name: floor_12
       rect:
         serializedVersion: 2
-        x: 1158
-        y: 391
-        width: 178
-        height: 176
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 660
+        y: 223
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -475,12 +475,12 @@ TextureImporter:
       name: floor_13
       rect:
         serializedVersion: 2
-        x: 1376
-        y: 390
-        width: 179
-        height: 178
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 785
+        y: 223
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -496,12 +496,12 @@ TextureImporter:
       name: floor_14
       rect:
         serializedVersion: 2
-        x: 15
-        y: 205
-        width: 181
-        height: 166
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 9
+        y: 111
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -517,12 +517,12 @@ TextureImporter:
       name: floor_15
       rect:
         serializedVersion: 2
-        x: 249
-        y: 205
-        width: 178
-        height: 167
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 143
+        y: 111
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -538,12 +538,12 @@ TextureImporter:
       name: floor_16
       rect:
         serializedVersion: 2
-        x: 477
-        y: 205
-        width: 178
-        height: 166
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 272
+        y: 111
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -559,12 +559,12 @@ TextureImporter:
       name: floor_17
       rect:
         serializedVersion: 2
-        x: 702
-        y: 205
-        width: 179
-        height: 166
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 402
+        y: 111
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -580,12 +580,12 @@ TextureImporter:
       name: floor_18
       rect:
         serializedVersion: 2
-        x: 931
-        y: 205
-        width: 178
-        height: 166
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 531
+        y: 111
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -601,12 +601,12 @@ TextureImporter:
       name: floor_19
       rect:
         serializedVersion: 2
-        x: 1158
-        y: 205
-        width: 178
-        height: 166
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 661
+        y: 111
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -622,12 +622,12 @@ TextureImporter:
       name: floor_20
       rect:
         serializedVersion: 2
-        x: 1376
-        y: 206
-        width: 178
-        height: 166
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 785
+        y: 111
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -643,12 +643,12 @@ TextureImporter:
       name: floor_21
       rect:
         serializedVersion: 2
-        x: 16
-        y: 12
-        width: 180
-        height: 178
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 10
+        y: 6
+        width: 100
+        height: 101
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -664,12 +664,12 @@ TextureImporter:
       name: floor_22
       rect:
         serializedVersion: 2
-        x: 249
-        y: 12
-        width: 178
-        height: 179
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 143
+        y: 8
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -685,12 +685,12 @@ TextureImporter:
       name: floor_23
       rect:
         serializedVersion: 2
-        x: 477
-        y: 12
-        width: 178
-        height: 178
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 272
+        y: 8
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -706,12 +706,12 @@ TextureImporter:
       name: floor_24
       rect:
         serializedVersion: 2
-        x: 703
-        y: 12
-        width: 178
-        height: 178
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 402
+        y: 8
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -727,12 +727,12 @@ TextureImporter:
       name: floor_25
       rect:
         serializedVersion: 2
-        x: 930
-        y: 12
-        width: 179
-        height: 178
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 532
+        y: 7
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -748,12 +748,12 @@ TextureImporter:
       name: floor_26
       rect:
         serializedVersion: 2
-        x: 1155
-        y: 12
-        width: 181
-        height: 178
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 661
+        y: 7
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -769,12 +769,12 @@ TextureImporter:
       name: floor_27
       rect:
         serializedVersion: 2
-        x: 1376
-        y: 12
-        width: 178
-        height: 179
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 785
+        y: 7
+        width: 100
+        height: 100
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

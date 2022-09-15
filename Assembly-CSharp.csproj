@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2020.3.23f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Scripts\LevelDesign\CreateLoot.cs" />
     <Compile Include="Assets\Scripts\UI\DialogWindowParametersScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInput.cs" />
@@ -63,11 +60,14 @@
     <Compile Include="Assets\Scripts\LevelDesign\CreateObjectByClickScript.cs" />
     <Compile Include="Assets\Scripts\LevelDesign\BoomDelayedScript.cs" />
     <Compile Include="Assets\Scripts\GlobalControl.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\Android\AndroidGameNotification.cs" />
     <Compile Include="Assets\Scripts\UI\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Damage\DeleteExplosion.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\iOS\iOSGameNotification.cs" />
     <Compile Include="Assets\Scripts\Player\SlopeHelpScript.cs" />
     <Compile Include="Assets\Scripts\StateRandomizer.cs" />
     <Compile Include="Assets\Scripts\Player\TakePotionScript.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\PendingNotification.cs" />
     <Compile Include="Assets\Scripts\LevelDesign\SliderPlatformMoveScript.cs" />
     <Compile Include="Assets\Scripts\UI\WinTriggerScript.cs" />
     <Compile Include="Assets\Scripts\Damage\BulletBehavior.cs" />
@@ -77,39 +77,57 @@
     <Compile Include="Assets\Scripts\UI\DialogMessage.cs" />
     <Compile Include="Assets\Scripts\LevelDesign\ElevatorScript.cs" />
     <Compile Include="Assets\Scripts\LevelDesign\RespawnAfterDeathScript.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Player\AttackRandomizer.cs" />
     <Compile Include="Assets\Scripts\SetSpineAnimation.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\Android\AndroidNotificationCenterExtensions.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\UI\Loader.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\IGameNotificationsPlatform.cs" />
     <Compile Include="Assets\Scripts\Damage\MakeHitScript.cs" />
     <Compile Include="Assets\Scripts\LevelDesign\PendulumBehavior.cs" />
     <Compile Include="Assets\Scripts\UI\MenuScript.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\IGameNotification.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStatistics.cs" />
     <Compile Include="Assets\Scripts\Damage\Health.cs" />
     <Compile Include="Assets\Scripts\InitialAnimatorBehaviour.cs" />
     <Compile Include="Assets\Scripts\LevelDesign\ParallaxBackgroundMovementScript.cs" />
     <Compile Include="Assets\Scripts\GameNameSpace.cs" />
     <Compile Include="Assets\Scripts\Damage\DamageCollider.cs" />
-    <Compile Include="Assets\Scripts\UI\SkipOnEscapeScript.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerBehavior.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\GameNotificationChannel.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\iOS\iOSGameNotification.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\PendingNotification.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\Android\AndroidNotificationCenterExtensions.cs" />
     <Compile Include="Assets\Notification Wrapper\Scripts\iOS\iOSNotificationsPlatform.cs" />
     <Compile Include="Assets\Notification Wrapper\Scripts\Android\AndroidNotificationsPlatform.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\GameNotificationsManager.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\IGameNotification.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\IGameNotificationsPlatform.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\Android\AndroidGameNotification.cs" />
-    <Compile Include="Assets\Notification Wrapper\Scripts\DefaultSerializer.cs" />
     <Compile Include="Assets\Notification Wrapper\Scripts\IPendingNotificationsSerializer.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\UI\SkipOnEscapeScript.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\GameNotificationsManager.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\DefaultSerializer.cs" />
+    <Compile Include="Assets\Notification Wrapper\Scripts\GameNotificationChannel.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Spine\version.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Characters\Goodguy\skeleton.atlas.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Characters\Badguy01\skeleton.atlas.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
