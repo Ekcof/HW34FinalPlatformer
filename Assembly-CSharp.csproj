@@ -102,6 +102,7 @@
     <Compile Include="Assets\Notification Wrapper\Scripts\DefaultSerializer.cs" />
     <Compile Include="Assets\Notification Wrapper\Scripts\GameNotificationChannel.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerBehavior.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAttack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

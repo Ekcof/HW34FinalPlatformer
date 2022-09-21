@@ -54,4 +54,5 @@ public class MakeHitScript : MonoBehaviour
         bulletBehavior.SetShooter(transform.gameObject);
 
     }
+
 }
