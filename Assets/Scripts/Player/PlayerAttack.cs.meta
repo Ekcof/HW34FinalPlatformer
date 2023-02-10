@@ -3,7 +3,15 @@ guid: f2a12ecef18965a41b8ea493094b94e6
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - muzzle: {instanceID: 0}
+  - gunImage: {instanceID: 0}
+  - ammoText: {instanceID: 0}
+  - skeletonMecanim: {instanceID: 0}
+  - makeHit: {instanceID: 0}
+  - playerMovement: {instanceID: 0}
+  - reload: {fileID: -5848791058163262484, guid: 538e2ddadc1508646abd4b3ec0c581f4, type: 2}
+  - fire: {fileID: -7170228498906937760, guid: 538e2ddadc1508646abd4b3ec0c581f4, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+//using Cinemachine;
 
 
 namespace Nameofthegame.Inputs
@@ -24,10 +24,17 @@ namespace Nameofthegame.Inputs
         [SerializeField] private float maxSlopeAngle;
         [SerializeField] private GameObject markerObject;
         [SerializeField] private GameObject markerObject2;
+        [SerializeField] private GameObject markerObject3;
+        [SerializeField] private GameObject markerObject4;
+
+        [SerializeField] private float dispersion = 0.05f;
+
+
+
+        public bool isRight = true;
 
         private Animator animator;
         private float slopeCheckDistance;
-        private bool isRight = true;
         private bool isOnSlope = false;
         private bool isJumping;
         private bool canJump = true;
@@ -45,11 +52,18 @@ namespace Nameofthegame.Inputs
         private float yScale;
         private float xScale;
         private Collider2D groundCollider;
+        private int collisionNumber;
         private RaycastHit2D hit;
         private GameObject uICanvas;
         private int appDirection;
         private bool appJump;
         private bool appFire;
+        private bool hasGround;
+        private bool isHanging;
+        private float yScaleHalf;
+        private float yScaleQuarter;
+
+        public bool IsHanging => isHanging;
 
         private void Awake()
         {
@@ -65,29 +79,44 @@ namespace Nameofthegame.Inputs
             yScale = groundCollider.bounds.size.y;
             xScale = groundCollider.bounds.size.x;
             slopeCheckDistance = xScale / 2 + 0.1f;
+            yScaleHalf = yScale / 2;
+            yScaleQuarter = yScale / 4;
         }
 
         private void Update()
         {
+            if (isHanging) return;
             float horizontalDirection = Input.GetAxis(GameNamespace.HORIZONTAL_AXIS);
             if (appDirection != 0) horizontalDirection = appDirection;
             bool isJumping;
-            if (appJump == false) { isJumping = Input.GetButtonDown(GameNamespace.JUMP); } else
+            if (appJump == false)
+            {
+                isJumping = Input.GetButtonDown(GameNamespace.JUMP);
+            }
+            else
             {
                 isJumping = true;
             }
-            bool isFiring1 = Input.GetButtonDown(GameNamespace.FIRE1);
+
+            if (isHanging) return;
             bool isUsing = Input.GetButtonDown(GameNamespace.SUBMIT2);
             bool isPause = Input.GetButtonDown(GameNamespace.CANCEL);
-            //CheckOverlap();
+
             CheckGround();
             SlopeCheck();
-            Move(horizontalDirection, isJumping, isFiring1, isUsing, isPause);
+
+            Move(horizontalDirection, isJumping, isUsing, isPause);
+
             if (isGrounded)
             {
-                isJumping = false;
+                //isJumping = false;
                 canJump = true;
-                animator.SetBool("Jump", false);
+                if (rb.velocity.y <= 0) animator.SetBool("Jump", false);
+                animator.SetBool("Fall", false);
+            }
+            else
+            {
+                animator.SetBool("Fall", true);
             }
         }
 
@@ -100,6 +129,7 @@ namespace Nameofthegame.Inputs
         {
             appJump = isJumpingByButton;
         }
+
         /// <summary>
         /// Check the slope of the platform
         /// </summary>
@@ -182,10 +212,10 @@ namespace Nameofthegame.Inputs
         /// </summary>
         /// <param name="overlapPosition">touch point</param>
         /// <returns></returns>
-        private bool GetCollision(Vector2 overlapPosition)
+        private bool GetGroundCollision(Vector2 overlapPosition)
         {
             bool hasGround = false;
-            RaycastHit2D[] allCollisions = Physics2D.CircleCastAll(overlapPosition, xScale, new Vector2(0, 0), 0, layerMask);
+            RaycastHit2D[] allCollisions = Physics2D.CircleCastAll(overlapPosition, xScale / 2, new Vector2(0, 0), 0, layerMask);
             if (allCollisions.Length > 0)
             {
                 for (int i = 0; i < allCollisions.Length; i++)
@@ -195,12 +225,15 @@ namespace Nameofthegame.Inputs
                     {
                         markerObject.transform.position = hitPoint;
                     }
-                    if (hitPoint.y <= overlapPosition.y)
+                    if (hitPoint.y <= (overlapPosition.y + dispersion))
                     {
                         hasGround = true;
+                        return hasGround;
+                        Debug.Log(allCollisions.Length);
                     }
                 }
             }
+            Debug.Log(allCollisions.Length);
             return hasGround;
         }
 
@@ -209,9 +242,9 @@ namespace Nameofthegame.Inputs
         /// </summary>
         private void CheckGround()
         {
-            Vector2 overlapPosition = new Vector2(groundColTransform.position.x, groundColTransform.position.y + 0.05f);
+            Vector2 overlapPosition = new Vector2(groundColTransform.position.x, groundColTransform.position.y + dispersion);
 
-            bool hasGround = GetCollision(overlapPosition);
+            hasGround = GetGroundCollision(overlapPosition);
             isGrounded = Physics2D.OverlapCircle(overlapPosition, jumpOffset, layerMask) && hasGround;
             if (rb.velocity.y <= 0.0f)
             {
@@ -244,7 +277,7 @@ namespace Nameofthegame.Inputs
             isUnderControl = true;
         }
 
-        public void Move(float appliedDirection, bool isJumping, bool isFiring1, bool isUsing, bool isPause)
+        public void Move(float appliedDirection, bool isJumping, bool isUsing, bool isPause)
         {
             direction = appliedDirection;
             if (isPause)
@@ -254,19 +287,15 @@ namespace Nameofthegame.Inputs
             if (isUnderControl)
             {
                 if (isJumping) Jump();
-                if (isFiring1)
+
+                if (isHanging) return;
+
+                if (Mathf.Abs(direction) > 0.1f)
                 {
-                    animator.SetBool("Attack", true);
-                    makeHit.CreateAttackCollider(isRight);
+                    CheckRight(direction);
+                    HorizontalMovement(direction);
                 }
-                else
-                {
-                    if (Mathf.Abs(direction) > 0.1f)
-                    {
-                        CheckRight(direction);
-                        HorizontalMovement(direction);
-                    }
-                }
+
                 if (direction == 0)
                 {
                     animator.SetBool("Run", false);
@@ -328,8 +357,75 @@ namespace Nameofthegame.Inputs
                 animator.SetBool("Jump", true);
                 isJumping = true;
                 canJump = false;
+                animator.SetBool("Fall", true);
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
+            else
+            {
+                (Vector2 newPoint, Transform edgeTransform) = GetTheEdge();
+                if (newPoint != Vector2.zero)
+                {
+                    markerObject3.transform.position = newPoint;
+                    HangOnTheEdge(newPoint, edgeTransform);
+                }
+            }
+        }
+
+        private void HangOnTheEdge(Vector2 pointToHang, Transform edgeTransform)
+        {
+            Vector2 upperPoint = pointToHang - new Vector2(groundCollider.bounds.extents.x * 2.5f, groundCollider.bounds.extents.y * 2.1f* (isRight ? 1 : -1));
+            transform.position = upperPoint;
+            transform.SetParent(edgeTransform, false);
+            rb.isKinematic = true;
+            rb.velocity = new Vector2(0, 0);
+            isUnderControl = false;
+            isHanging = true;
+            animator.SetBool("Fall", false);
+            animator.SetBool("Run", false);
+            animator.SetBool("Jump", false);
+            animator.SetBool("Edge", true);
+        }
+
+        private (Vector2, Transform) GetTheEdge()
+        {
+            Vector2 topPoint = groundCollider.bounds.max;
+
+            int rightDirection = isRight ? 1 : -1;
+
+            Vector2 upperClimpPoint = topPoint + (Vector2.up + Vector2.right * rightDirection) * yScaleQuarter;
+            markerObject4.transform.position = upperClimpPoint;
+
+            RaycastHit2D upperHit = Physics2D.Raycast(topPoint, (Vector2.up + Vector2.right * rightDirection) * yScaleQuarter, yScaleHalf, layerMask);
+
+            if (upperHit.collider == null)
+            {
+                RaycastHit2D downHit = Physics2D.Raycast(upperClimpPoint, Vector2.down, yScaleHalf, layerMask);
+                Vector2 prevPoint;
+                Transform prevTransform;
+                if (downHit.collider != null)
+                {
+                    prevPoint = downHit.collider.ClosestPoint(downHit.point);
+                    prevTransform = downHit.transform;
+                }
+                else
+                {
+                    return (Vector2.zero, null);
+                }
+
+                while (downHit.collider != null)
+                {
+                    upperClimpPoint.x -= 0.01f * rightDirection;
+                    downHit = Physics2D.Raycast(upperClimpPoint, Vector2.down, yScaleHalf, layerMask);
+                    if (downHit.collider == null)
+                    {
+                        return (prevPoint, prevTransform);
+                    }
+                    prevPoint = downHit.collider.ClosestPoint(downHit.point);
+                    prevTransform = downHit.transform;
+                    //                if (downHit.collider != null) return (downHit.collider.ClosestPoint(downHit.point), downHit.transform);
+                }
+            }
+            return (Vector2.zero, null);
         }
 
         private void HorizontalMovement(float direction)
@@ -346,17 +442,22 @@ namespace Nameofthegame.Inputs
                 newVelocity.Set(speed * slopeNormalPerp.x * -direction, speed * slopeNormalPerp.y * -direction);
                 rb.velocity = newVelocity;
             }
-            else if (!isGrounded) //If in the air
+            else if (!isGrounded && !GetAnyCollision()) //If in the air
             {
                 if (rb.velocity.y >= 0)
                 {
+                    Debug.Log("AIR!!!!");
                     newVelocity.Set(speed * direction, rb.velocity.y);
                     rb.velocity = newVelocity;
                 }
             }
         }
 
-        private void CheckRight(float direction)
+        /// <summary>
+        /// Get true if player is turned right
+        /// </summary>
+        /// <param name="direction"></param>
+        public void CheckRight(float direction)
         {
             Vector3 theScale = transform.localScale;
             if (direction < 0 && isRight)
@@ -381,6 +482,22 @@ namespace Nameofthegame.Inputs
         public float ReturnJumpOffset()
         {
             return jumpOffset;
+        }
+
+        private bool GetAnyCollision()
+        {
+            if (collisionNumber > 0) return true;
+            return false;
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            ++collisionNumber;
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            --collisionNumber;
         }
     }
 

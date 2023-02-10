@@ -11,6 +11,7 @@ public class MakeHitScript : MonoBehaviour
     [SerializeField] private float delay;
     [SerializeField] private GameObject hitPrefab;
     [SerializeField] private bool isMelee;
+    [SerializeField] private Transform muzzle;
     private BulletBehavior bulletBehavior;
     private Health health;
     private float speed;
@@ -34,9 +35,8 @@ public class MakeHitScript : MonoBehaviour
             if (health == null || health.GetDamage() <= 0) { yield break; }
         }
 
-        if (!isRight)
-            hitDistance *= -1;
-        Vector2 prefabPosition = new Vector2(transform.position.x + currentHitDistance * hitDistance, transform.position.y + hitAltitude);
+        if (!isRight) hitDistance *= -1;
+        Vector2 prefabPosition = muzzle.position;
         GameObject hit = Instantiate(hitPrefab, prefabPosition, Quaternion.identity);
         bulletBehavior = hit.GetComponent<BulletBehavior>();
         if (isMelee)

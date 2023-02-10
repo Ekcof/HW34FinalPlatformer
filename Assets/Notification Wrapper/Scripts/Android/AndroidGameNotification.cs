@@ -81,7 +81,8 @@ namespace NotificationSamples.Android
         public string LargeIcon { get => InternalNotification.LargeIcon; set => internalNotification.LargeIcon = value; }
 
         /// <summary>
-        /// Instantiate a new instance of <see cref="AndroidGameNotification"/>.
+        /// Instantiate a new 
+        /// of <see cref="AndroidGameNotification"/>.
         /// </summary>
         public AndroidGameNotification()
         {

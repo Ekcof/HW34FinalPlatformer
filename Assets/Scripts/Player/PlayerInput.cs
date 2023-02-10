@@ -24,7 +24,7 @@ namespace Nameofthegame.Inputs
             bool isFiring1 = Input.GetButtonDown(GameNamespace.FIRE1);
             bool isUsing = Input.GetButtonDown(GameNamespace.SUBMIT2);
             bool isPause = Input.GetButtonDown(GameNamespace.CANCEL);
-            playerMovement.Move(horizontalDirection, isJumping, isFiring1, isUsing, isPause);
+            playerMovement.Move(horizontalDirection, isJumping, isUsing, isPause);
         }
     }
 }
