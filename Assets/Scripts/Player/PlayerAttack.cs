@@ -75,7 +75,7 @@ namespace Nameofthegame.Inputs
             UpdateWeaponInfo();
             isFiring = Input.GetButtonDown(GameNamespace.FIRE1);
             //muzzle.transform.TransformPoint( new Vector3(bone.WorldX, bone.WorldY,transform.position.z));
-            if (isFiring && !animator.GetCurrentAnimatorStateInfo(1).IsName("Shoot")) CalculateFirePossibility();
+            if (isFiring && !animator.GetCurrentAnimatorStateInfo(1).IsName("Shoot") && !(animator.GetBool("Edge"))) CalculateFirePossibility();
         }
 
         private void UpdateWeaponInfo()
@@ -107,7 +107,7 @@ namespace Nameofthegame.Inputs
         private void FireTheWeapon()
         {
             canFire = false;
-            Debug.Log("haha");
+            //Debug.Log("haha");
             if (currentMagazineAmmo > 0) currentMagazineAmmo--;
             animator.SetBool("Shoot", true);
             muzzleAnimator.SetBool("Shoot", true);

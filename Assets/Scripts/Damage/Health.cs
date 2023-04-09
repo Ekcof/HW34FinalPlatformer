@@ -23,6 +23,9 @@ public class Health : MonoBehaviour
     private CreateLoot createLoot;
     private RespawnAfterDeathScript respawnAfterDeathScript;
     private Camera mainCamera;
+
+    public int DataHealth { get { return currentHealthPoints; } private set { currentHealthPoints = value; } }
+
     private void Awake()
     {
         currentHealthPoints = maxHealthPoints;

@@ -1,6 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System;
 //using Cinemachine;
 
 
@@ -61,7 +63,7 @@ namespace Nameofthegame.Inputs
         private bool hasGround;
         private bool isHanging;
         private float yScaleHalf;
-        private float yScaleQuarter;
+        [SerializeField] private float edgeDistance;
 
         public bool IsHanging => isHanging;
 
@@ -80,25 +82,18 @@ namespace Nameofthegame.Inputs
             xScale = groundCollider.bounds.size.x;
             slopeCheckDistance = xScale / 2 + 0.1f;
             yScaleHalf = yScale / 2;
-            yScaleQuarter = yScale / 4;
+            edgeDistance = edgeDistance==0 ? yScale / 4: edgeDistance;
         }
 
         private void Update()
         {
-            if (isHanging) return;
+            //if (isHanging) return;
+            bool isJumping = Input.GetButtonDown(GameNamespace.JUMP);
+
+            if (isHanging && !isJumping) return;
+
             float horizontalDirection = Input.GetAxis(GameNamespace.HORIZONTAL_AXIS);
             if (appDirection != 0) horizontalDirection = appDirection;
-            bool isJumping;
-            if (appJump == false)
-            {
-                isJumping = Input.GetButtonDown(GameNamespace.JUMP);
-            }
-            else
-            {
-                isJumping = true;
-            }
-
-            if (isHanging) return;
             bool isUsing = Input.GetButtonDown(GameNamespace.SUBMIT2);
             bool isPause = Input.GetButtonDown(GameNamespace.CANCEL);
 
@@ -123,11 +118,6 @@ namespace Nameofthegame.Inputs
         public void SetDirection(int newValue)
         {
             appDirection = newValue;
-        }
-
-        public void JumpButtonState(bool isJumpingByButton)
-        {
-            appJump = isJumpingByButton;
         }
 
         /// <summary>
@@ -233,7 +223,6 @@ namespace Nameofthegame.Inputs
                     }
                 }
             }
-            Debug.Log(allCollisions.Length);
             return hasGround;
         }
 
@@ -351,6 +340,7 @@ namespace Nameofthegame.Inputs
 
         private void Jump()
         {
+            Debug.Log("Tried to jump");
             if (isGrounded && canJump)
             {
                 isGrounded = false;
@@ -362,23 +352,28 @@ namespace Nameofthegame.Inputs
             }
             else
             {
+                //Debug.Log("Not grounded and can't jump");
                 (Vector2 newPoint, Transform edgeTransform) = GetTheEdge();
-                if (newPoint != Vector2.zero)
+                if (newPoint != Vector2.zero && !animator.GetBool("Edge"))
                 {
                     markerObject3.transform.position = newPoint;
                     HangOnTheEdge(newPoint, edgeTransform);
+                }
+                else if (animator.GetBool("Edge"))
+                {
+                    PullUpFromTheEdge(newPoint);
                 }
             }
         }
 
         private void HangOnTheEdge(Vector2 pointToHang, Transform edgeTransform)
         {
-            Vector2 upperPoint = pointToHang - new Vector2(groundCollider.bounds.extents.x * 2.5f, groundCollider.bounds.extents.y * 2.1f* (isRight ? 1 : -1));
+            Vector2 upperPoint = pointToHang - new Vector2(groundCollider.bounds.extents.x * 2.5f, groundCollider.bounds.extents.y * 2.1f * (isRight ? 1 : -1));
             transform.position = upperPoint;
             transform.SetParent(edgeTransform, false);
             rb.isKinematic = true;
             rb.velocity = new Vector2(0, 0);
-            isUnderControl = false;
+            //isUnderControl = false;
             isHanging = true;
             animator.SetBool("Fall", false);
             animator.SetBool("Run", false);
@@ -386,25 +381,60 @@ namespace Nameofthegame.Inputs
             animator.SetBool("Edge", true);
         }
 
+        private async void PullUpFromTheEdge(Vector2 pointToHang)
+        {
+            Vector2 targetPosition = new Vector2(pointToHang.x + groundCollider.bounds.extents.x * 2.5f * direction, pointToHang.y + 0.1f);
+            animator.SetBool("Edge", false);
+            await UniTask.Delay(TimeSpan.FromSeconds(animator.GetCurrentAnimatorStateInfo(0).length));
+            isHanging = false;
+            transform.position = targetPosition;
+            transform.SetParent(null, true);
+            rb.isKinematic = false;
+
+            // Pause for the duration of the current animation
+            // Code to be executed after the pause
+            Debug.Log("Animation complete!");
+        }
+
+        private void ClimbUp()
+        {
+            StartCoroutine(ClimbCoroutine());
+        }
+
+        private IEnumerator ClimbCoroutine()
+        {
+            while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// Get the edge of the platform near the falling player
+        /// </summary>
+        /// <returns></returns>
         private (Vector2, Transform) GetTheEdge()
         {
             Vector2 topPoint = groundCollider.bounds.max;
 
             int rightDirection = isRight ? 1 : -1;
 
-            Vector2 upperClimpPoint = topPoint + (Vector2.up + Vector2.right * rightDirection) * yScaleQuarter;
+            Vector2 upperClimpPoint = topPoint + (Vector2.up + Vector2.right * rightDirection) * edgeDistance;
             markerObject4.transform.position = upperClimpPoint;
 
-            RaycastHit2D upperHit = Physics2D.Raycast(topPoint, (Vector2.up + Vector2.right * rightDirection) * yScaleQuarter, yScaleHalf, layerMask);
-
+            RaycastHit2D upperHit = Physics2D.Raycast(topPoint, (upperClimpPoint - topPoint).normalized, edgeDistance, layerMask);
+            Debug.DrawRay(topPoint, (upperClimpPoint - topPoint).normalized, Color.green, 5f);
             if (upperHit.collider == null)
             {
-                RaycastHit2D downHit = Physics2D.Raycast(upperClimpPoint, Vector2.down, yScaleHalf, layerMask);
+                Debug.Log("______No blocking collider");
+                Debug.DrawRay(upperClimpPoint, Vector2.down, Color.red, edgeDistance);
+                RaycastHit2D downHit = Physics2D.Raycast(upperClimpPoint, Vector2.down, layerMask);
                 Vector2 prevPoint;
                 Transform prevTransform;
                 if (downHit.collider != null)
                 {
-                    prevPoint = downHit.collider.ClosestPoint(downHit.point);
+                    Debug.Log("_______Got the surface!!!!!!");
+                    prevPoint = downHit.point;
                     prevTransform = downHit.transform;
                 }
                 else
@@ -415,7 +445,7 @@ namespace Nameofthegame.Inputs
                 while (downHit.collider != null)
                 {
                     upperClimpPoint.x -= 0.01f * rightDirection;
-                    downHit = Physics2D.Raycast(upperClimpPoint, Vector2.down, yScaleHalf, layerMask);
+                    downHit = Physics2D.Raycast(upperClimpPoint, Vector2.down, layerMask);
                     if (downHit.collider == null)
                     {
                         return (prevPoint, prevTransform);
@@ -425,6 +455,7 @@ namespace Nameofthegame.Inputs
                     //                if (downHit.collider != null) return (downHit.collider.ClosestPoint(downHit.point), downHit.transform);
                 }
             }
+            Debug.Log($"_______not got the surface, the {upperHit.transform.name} is in front of us");
             return (Vector2.zero, null);
         }
 
@@ -446,7 +477,7 @@ namespace Nameofthegame.Inputs
             {
                 if (rb.velocity.y >= 0)
                 {
-                    Debug.Log("AIR!!!!");
+                    //Debug.Log("AIR!!!!");
                     newVelocity.Set(speed * direction, rb.velocity.y);
                     rb.velocity = newVelocity;
                 }
